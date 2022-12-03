@@ -1,0 +1,41 @@
+service: serverless-typscript
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dynamodb-local
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  memorySize: 256
+  iam:
+    role: arn:aws:iam::872163348003:role/lambda-execution-role
+
+functions:
+  create-user:
+    handler: src/functions/users/handler.createUser
+    events:
+      - http:
+          path: /user
+          method: post
+  list-user:
+    handler: src/functions/users/handler.listAllUsers
+    events:
+      - http:
+          path: /users
+          method: get
+  update-user:
+    handler: src/functions/users/handler.updateUser
+    events:
+      - http:
+          path: /user/{userId}
+          method: put
+  delete-user:
+    handler: src/functions/users/handler.deleteUser
+    events:
+      - http:
+          path: /user/{userId}
+          method: delete
