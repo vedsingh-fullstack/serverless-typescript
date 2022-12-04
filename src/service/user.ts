@@ -15,6 +15,8 @@ export default class UserService {
     }
     
     async createUser(user: User): Promise<void> {
+        console.log("this.client---")
+        console.log(this.client)
         await this.client.put({
             TableName: this.tableName,
             Item: user
